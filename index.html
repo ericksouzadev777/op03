@@ -3,104 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ramon Pereira - Aula 1</title>
+  <link rel="shortcut icon" href="https://media.atomicatpages.net/u/n5mf2L7pasMCbleXYZehLidiUNy1/Pictures/hpPdWG9118354.png" type="image/x-icon">
+  <title>Ramon Pereira</title>
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white">
 
-    <section class="bg-gradient-to-b from-black to-red-700 text-center py-16">
+  <!-- ========== Seção 1: Vídeo ========== -->
+  <section class="bg-gradient-to-b from-black to-red-700 text-center py-16">
     <div class="container mx-auto px-4">
-        <!-- Logo -->
-        <div class="mb-8">
+      <!-- Logo -->
+      <div class="mb-8">
         <img src="https://media.atomicatpages.net/u/n5mf2L7pasMCbleXYZehLidiUNy1/Pictures/cpXMnA3349359.png?width=1600&height=544"
             alt="Ramon Pereira" class="mx-auto h-12"/>
-        </div>
-        <!-- Título da aula -->
-        <h2 class="text-xl md:text-2xl font-medium mb-12">Aula 1 – Truque de Orgasmo</h2>
-        <!-- Vídeo com overlay -->
-        <div class="mx-auto w-full max-w-sm">
+      </div>
+      <!-- Título da aula -->
+      <h2 class="text-xl md:text-2xl font-medium mb-12">Aula 1 – Truque de Orgasmo</h2>
+      <!-- Vídeo com overlay -->
+      <div class="mx-auto w-full max-w-sm">
         <div class="relative">
-            <!-- 1) Coloque ramonpereira.mp4 na pasta public/ (ou equivalente) -->
-            <!-- 2) Troque poster.jpg pela imagem de thumb que você quiser -->
-            <video
+          <!-- 
+            • Coloque ramonpereira.mp4 e poster.jpg na pasta public/ 
+            • Ajuste as URLs abaixo se necessário 
+          -->
+          <video
             id="lessonVideo"
             src="/ramonpereira.mp4"
             poster="/poster.jpg"
             preload="metadata"
             class="w-full rounded-lg shadow-lg"
-            ></video>
+          ></video>
 
-            <!-- Overlay pausado -->
-            <div
+          <!-- Overlay pausado -->
+          <div
             id="videoOverlay"
             class="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-4"
-            >
+          >
             <p class="text-white mb-6">Você já começou a assistir esse vídeo</p>
-            <button
-                id="btnContinue"
-                class="flex items-center text-white mb-4 hover:opacity-90"
-            >
-                <!-- Play Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <button id="btnContinue" class="flex items-center text-white mb-4 hover:opacity-90">
+              <!-- Play Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
-                        d="M6.3 5.5A.75.75 0 017.5 5l6 4.5a.75.75 0 010 1.25l-6 4.5A.75.75 0 016.3 14V6z"
-                        clip-rule="evenodd"/>
-                </svg>
-                <span class="ml-2 font-medium">Continuar assistindo?</span>
+                      d="M6.3 5.5A.75.75 0 017.5 5l6 4.5a.75.75 0 010 1.25l-6 4.5A.75.75 0 016.3 14V6z"
+                      clip-rule="evenodd"/>
+              </svg>
+              <span class="ml-2 font-medium">Continuar assistindo?</span>
             </button>
-            <button
-                id="btnRestart"
-                class="flex items-center text-white hover:opacity-90"
-            >
-                <!-- Refresh Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button id="btnRestart" class="flex items-center text-white hover:opacity-90">
+              <!-- Refresh Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 4v5h5M20 20v-5h-5M5 19a9 9 0 0114-2.53"/>
-                </svg>
-                <span class="ml-2 font-medium">Assistir do início?</span>
+                      d="M4 4v5h5M20 20v-5h-5M5 19a9 9 0 0114-2.53"/>
+              </svg>
+              <span class="ml-2 font-medium">Assistir do início?</span>
             </button>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-    </section>
+  </section>
 
-    <!-- Script para controlar play/pause e overlay -->
-    <script>
-    const video = document.getElementById('lessonVideo');
-    const overlay = document.getElementById('videoOverlay');
-    const btnContinue = document.getElementById('btnContinue');
-    const btnRestart  = document.getElementById('btnRestart');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const video     = document.getElementById('lessonVideo');
+      const overlay   = document.getElementById('videoOverlay');
+      const btnContinue = document.getElementById('btnContinue');
+      const btnRestart  = document.getElementById('btnRestart');
 
-    // Ao clicar em "Continuar", retira overlay e dá play
-    btnContinue.addEventListener('click', () => {
+      // Assim que soubermos a duração/metadados, pausamos e mostramos overlay
+      video.addEventListener('loadedmetadata', () => {
+        video.pause();
+        overlay.classList.remove('hidden');
+      });
+
+      // Continua de onde parou
+      btnContinue.addEventListener('click', () => {
         overlay.classList.add('hidden');
         video.play();
-    });
+      });
 
-    // Ao clicar em "Reiniciar", zera tempo, retira overlay e play
-    btnRestart.addEventListener('click', () => {
+      // Reinicia do zero
+      btnRestart.addEventListener('click', () => {
         video.currentTime = 0;
         overlay.classList.add('hidden');
         video.play();
+      });
+
+      // Quando o usuário pausar ou chegar ao fim, reaparece o overlay
+      video.addEventListener('pause', () => overlay.classList.remove('hidden'));
+      video.addEventListener('ended', () => overlay.classList.remove('hidden'));
     });
+  </script>
 
-    // Sempre que o vídeo for pausado ou terminar, mostra o overlay
-    video.addEventListener('pause', () => overlay.classList.remove('hidden'));
-    video.addEventListener('ended', () => overlay.classList.remove('hidden'));
-
-    // Se você quiser começar já pausado com overlay visível, remove autoplay
-    // (por default ele abre pausado)
-    </script>
 
   <!-- ========== Seção 2: Apresentação do Professor ========== -->
-  <section class="relative bg-black bg-cover bg-center" style="background-image: url('path/to/bg-section2.jpg');">
-    <!-- Camada escura por cima do bg -->
+  <section class="relative bg-black bg-cover bg-center" style="background-image: url('https://media.atomicatpages.net/u/0B1zizlSngfFNS7TlZ858AKj77o1/Pictures/PnSsqc7302644.png');">
     <div class="absolute inset-0 bg-black opacity-75"></div>
     <div class="relative container mx-auto px-4 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <!-- Foto do professor -->
       <div>
-        <img src="https://media.atomicatpages.net/u/n5mf2L7pasMCbleXYZehLidiUNy1/Pictures/Krqlke5827962.png?width=524&height=613" alt="Ramon Pereira" class="shadow-lg w-1/2 object-cover"/>
+        <img
+          src="https://media.atomicatpages.net/u/n5mf2L7pasMCbleXYZehLidiUNy1/Pictures/Krqlke5827962.png?width=524&height=613"
+          alt="Ramon Pereira"
+          class="shadow-lg w-2/2 object-cover"
+        />
       </div>
       <!-- Texto e ícones -->
       <div class="text-white">
@@ -108,52 +115,41 @@
         <h2 class="text-3xl md:text-4xl font-bold mb-2">Ramon Pereira</h2>
         <p class="text-gray-300 mb-8">Sexólogo e Terapeuta Comportamental.</p>
         <ul class="space-y-8">
-          <!-- Certificado -->
           <li class="flex items-start">
-            <div class="flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 12l2 2 4-4"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 2a10 10 0 108 4.28V20h-4v-3H8v3H4V6.28A10 10 0 0012 2z"/>
-              </svg>
-            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4M12 2a10 10 0 108 4.28V20h-4v-3H8v3H4V6.28A10 10 0 0012 2z"/>
+            </svg>
             <div class="ml-4">
-              <h4 class="font-semibold text-white mb-1">Certificado</h4>
+              <h4 class="font-semibold mb-1">Certificado</h4>
               <p class="text-gray-300">
                 Especialista em Terapias de Casais, Disfunções Sexuais, Massagens Eróticas, Saúde Mental e Comportamento Humano.
               </p>
             </div>
           </li>
-          <!-- Referência nº1 -->
           <li class="flex items-start">
-            <div class="flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 17v-6m4 6v-10m4 10v-8"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 17h18"/>
-              </svg>
-            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 17v-6m4 6v-10m4 10v-8"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 17h18"/>
+            </svg>
             <div class="ml-4">
-              <h4 class="font-semibold text-white mb-1">Referência nº 1</h4>
+              <h4 class="font-semibold mb-1">Referência nº 1</h4>
               <p class="text-gray-300">
-                Atualmente, o número 1 do ranking do mercado da sexualidade; ajudando mais de 35.000 homens a melhorarem seus desempenhos com suas parceiras – ensinando técnicas e truques.
+                Atualmente, o número 1 do ranking do mercado da sexualidade; ajudando mais de 35.000 homens a melhorarem seus desempenhos com suas parceiras.
               </p>
             </div>
           </li>
-          <!-- Sucesso -->
           <li class="flex items-start">
-            <div class="flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 17l6-6 4 4 8-8"/>
-              </svg>
-            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 17l6-6 4 4 8-8"/>
+            </svg>
             <div class="ml-4">
-              <h4 class="font-semibold text-white mb-1">Sucesso</h4>
+              <h4 class="font-semibold mb-1">Sucesso</h4>
               <p class="text-gray-300">
-                Ele se tornou uma grande referência com um dos maiores métodos de manipulação feminina – chamado LIBERAÇÃO DE ESQUICHOS.
+                Ele se tornou uma grande referência com um dos maiores métodos de manipulação feminina – chamado LIBERAÇÃO DE ESGUICHOS.
               </p>
             </div>
           </li>
@@ -162,17 +158,20 @@
     </div>
   </section>
 
-  <!-- ========== Footer ========== -->
-  <footer class="bg-gray-900">
-    <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between">
-      <!-- Logo no footer -->
-      <img src="path/to/logo.png" alt="Ramon Pereira" class="h-8"/>
-      <!-- Links -->
-      <div class="mt-4 md:mt-0 space-x-6">
-        <a href="#" class="text-gray-400 hover:text-white text-sm">Políticas de Privacidade</a>
-        <a href="#" class="text-gray-400 hover:text-white text-sm">Termos de Uso</a>
-      </div>
+  <!-- ========== Seção 3: Chamada para Ação ========== -->
+  <section class="bg-gray-800 py-16 text-center">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-6">Pronto para transformar sua vida?</h2>
+      <!-- Substitua #PELO_SEU_LINK pelo destino do CTA -->
+      <a href="#PELO_SEU_LINK" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition">
+        Acessar Agora
+      </a>
     </div>
+  </section>
+
+  <!-- ========== Footer Simples ========== -->
+  <footer class="bg-black py-6 text-center text-gray-500 text-sm">
+    &copy; 2025 Ramon Pereira. Todos os direitos reservados.
   </footer>
 
 </body>
